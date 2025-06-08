@@ -111,15 +111,12 @@ Push to the branch: git push origin feature/your-feature-name
 
 Open a Pull Request 🚀
 
-🪪 License
-This project is licensed under the MIT License. See LICENSE file for details.
-
 👤 Author
-Made with 💻 and 🎤 by Harsh Vaishnav
+ Harsh Vaishnav
 
-GitHub: @HARSHHVAISHNAV
+GitHub: https://github.com/HARSHHVAISHNAV
 
-LinkedIn: linkedin.com/in/harshvaishnav
+LinkedIn: www.linkedin.com/in/harsh-vaishnav-a8b46b230
 
 📸 Preview
 Coming Soon – Live demo or sample recording!
