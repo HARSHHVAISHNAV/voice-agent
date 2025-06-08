@@ -1,0 +1,9 @@
+openai-whisper
+ffmpeg-python
+sounddevice
+scipy
+pandas
+python-dotenv
+elevenlabs
+openai
+together

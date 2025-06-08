@@ -1,0 +1,7 @@
+{
+  "input_type": 1,
+  "name": "VoiceAgentIngress",
+  "room_name": "test-room",
+  "participant_identity": "voice-bot",
+  "participant_name": "Voice Bot"
+}
