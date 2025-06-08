@@ -24,13 +24,13 @@ A **real-time voice assistant** powered by [LiveKit](https://livekit.io/), **fas
 
 ## 🛠️ Setup Instructions
 
-### 1. 🔁 Clone the repository
+1. 🔁 Clone the repository
 
 
 git clone https://github.com/HARSHHVAISHNAV/voice-agent.git
 cd voice-agent
 
-####2. 📦 Install dependencies
+2. 📦 Install dependencies
 Use a virtual environment (recommended):
 
 bash
