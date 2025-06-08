@@ -30,7 +30,7 @@ A **real-time voice assistant** powered by [LiveKit](https://livekit.io/), **fas
 git clone https://github.com/HARSHHVAISHNAV/voice-agent.git
 cd voice-agent
 
-###2. 📦 Install dependencies
+2. 📦 Install dependencies
 Use a virtual environment (recommended):
 
 bash
@@ -45,7 +45,8 @@ bash
 Copy
 Edit
 pip install -r requirements.txt
-###3. 🔐 Setup .env file
+
+3. 🔐 Setup .env file
 Create a .env file in the root with the following content:
 
 env
