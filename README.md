@@ -1,124 +1,135 @@
-Voice Agent AI is a real-time conversational voice assistant built using LiveKit's audio streaming platform combined with powerful AI models for speech recognition, natural language understanding, and speech synthesis. The system listens to live audio in a virtual room, transcribes speech to text using a Whisper-based model, generates intelligent responses through a language model (LLM), and replies back with natural, human-like voice using ElevenLabs' text-to-speech API.
+# 🧠 InvisioVoice: Real-Time AI Voice Agent using LiveKit + STT + LLM + TTS
 
-This project aims to demonstrate a full-stack voice AI pipeline integrating modern open-source and cloud technologies, designed for real-time interaction scenarios like virtual assistants, voice chatbots, and accessibility tools.
-
-✅ Copy & Save as README.md in your project root:
-markdown
-Copy
-Edit
-# 🗣️ Voice Agent AI (LiveKit + STT + LLM + TTS)
-
-A **real-time voice assistant** powered by [LiveKit](https://livekit.io/), **faster-whisper** (STT), **OpenAI** (LLM), and **ElevenLabs** (TTS). This bot joins a LiveKit room, listens to voice input, generates intelligent responses using an LLM, and replies back using human-like synthesized speech.
+Welcome to **InvisioVoice**, an AI-powered real-time voice agent designed to simulate human-like interaction using a streaming audio pipeline. This project uses LiveKit to manage voice sessions and integrates APIs for **Speech-to-Text**, **LLM response**, and **Text-to-Speech**, providing a full-duplex voice assistant experience.
 
 ---
 
-## 🎯 Features
+## 🚀 Features
 
-- 🎧 Real-time **voice capture** from LiveKit room
-- 🧠 **Speech-to-Text** using [Faster-Whisper](https://github.com/guillaumekln/faster-whisper)
-- 🤖 AI-generated replies using **OpenAI LLMs**
-- 🔊 Text-to-Speech responses using [ElevenLabs](https://www.elevenlabs.io/)
-- 🌐 Environment-configurable and production-ready
+- 🎤 **Voice Input** using microphone recording
+- 🧠 **Speech-to-Text (STT)** with **Together AI (Whisper-based)**
+- 💬 **LLM Replies** using **Groq** (Mistral-8x7B)
+- 🔊 **Text-to-Speech (TTS)** with **ElevenLabs**
+- ⏱️ **Session metrics logging**: EOU Delay, TTFT, TTFB, Total Latency
+- ✅ Uses LiveKit for real-time session orchestration
 
 ---
 
-## 🛠️ Setup Instructions
+## 📂 Project Files Overview
 
-1. 🔁 Clone the repository
+### 1. `myagent.py` ✅
+- A **fully integrated voice agent** using Together (STT), Groq (LLM), and ElevenLabs (TTS).
+- Working implementation with **LiveKit session + manual voice recording**.
+- ❌ Interruption handling not yet implemented.
+- ❌ Latency not under 2s — but all logs are recorded to `metrics.csv`.
+
+---
+
+### 2. `apps.py` ⚠️
+- The **ideal architecture** using VAD (Voice Activity Detection) from Silero to handle **interruptions**.
+- Intended for **streaming/real-time STT** sessions.
+- ❌ Currently blocked due to **ONNX compatibility issues with Python 3.12**.
+
+---
+
+### 3. `app.py` ✅
+- A **basic working pipeline** for testing STT → LLM → TTS without LiveKit.
+- Good for **offline/local experimentation** and fast debugging.
+
+---
+
+## 🔧 Installation & Setup
+
+Step 1: Clone the Repository
 
 
-git clone https://github.com/HARSHHVAISHNAV/voice-agent.git
-cd voice-agent
+git clone https://github.com/your-username/invisio-voice.git
+cd invisio-voice
 
-2. 📦 Install dependencies
-Use a virtual environment (recommended):
+---
 
+Step 2: Create a Virtual Environment
 bash
 Copy
 Edit
 python -m venv venv
-venv\Scripts\activate   # on Windows
-# source venv/bin/activate   # on Linux/Mac
-Then install required packages:
+venv\Scripts\activate   # On Windows
+# OR
+source venv/bin/activate  # On macOS/Linux
 
+---
+
+Step 3: Install Dependencies
 bash
 Copy
 Edit
 pip install -r requirements.txt
-
-#####3. 🔐 Setup .env file
-Create a .env file in the root with the following content:
-
-env
-Copy
-Edit
-LIVEKIT_API_KEY=your_livekit_api_key
-LIVEKIT_API_SECRET=your_livekit_api_secret
-LIVEKIT_URL=ws://your-livekit-url
-ROOM_NAME=your_room_name
-BOT_NAME=your_bot_name
-
-TOGETHER_API_KEY=your_openai_or_together_ai_key
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
-Make sure your LiveKit room is accessible and your ElevenLabs API key is valid.
-
-▶️ Running the Voice Agent
-After setting up everything:
+Step 4: Set Up Environment Variables
+Copy the sample environment file:
 
 bash
 Copy
 Edit
-python voice_agent.py
-If all works correctly, you’ll see:
+cp .env.sample .env
+Edit .env and fill in your API keys:
 
+ini
+Copy
+Edit
+TOGETHER_API_KEY=your-together-api-key
+GROQ_API_KEY=your-groq-api-key
+ELEVENLABS_API_KEY=your-elevenlabs-key
+
+LIVEKIT_URL=your-livekit-url
+LIVEKIT_API_KEY=your-livekit-key
+LIVEKIT_API_SECRET=your-livekit-secret
+▶️ Running the Agent
+Option 1: Run Local Manual Voice Agent (Stable)
 bash
 Copy
 Edit
-✅ Joined room: your_room_name as your_bot_name
-🎤 Listening to: ...
-💬 You said: Hello, what's up?
-🔊 Replying using ElevenLabs TTS...
-📦 Output Overview
-Logs each transcription in real time
+python myagent.py connect --room=your-room-name
+This is the most stable and production-ready version so far.
 
-Responds with LLM + ElevenLabs voice
+📊 Output Metrics
+Session metrics are logged into:
 
-Debug-friendly and modular for further extension
+metrics.csv: Logs for each session including:
 
-💡 Notes
-The .gitignore file prevents pushing heavy dependencies like venv/, .env, and DLLs
+EOU Delay (End of User speech)
 
-Uses faster-whisper for CPU-based STT (can be upgraded to GPU)
+TTFT (Time to First Token)
 
-You must have your own LiveKit server or use LiveKit Cloud
+TTFB (Time to First Byte of TTS)
 
-🧩 Tech Stack
-Tool	Role
-LiveKit	Real-time audio streaming
-Faster-Whisper	Speech-to-Text (STT)
-OpenAI / Together AI	LLM-based responses
-ElevenLabs	Voice-based TTS
-Python	Backend logic
+Total Latency
 
-🙌 Contributing
-If you'd like to contribute:
+⚠️ Known Issues
+apps.py uses ONNX-dependent VAD, which breaks with Python 3.12+
 
-Fork this repo
+myagent.py does not yet support interruptions
 
-Create a new branch: git checkout -b feature/your-feature-name
+Latency is slightly higher than 2s in most cases due to multiple API hops
 
-Commit your changes: git commit -m 'Added feature X'
+💡 Future Improvements
+ Migrate to Python 3.10 to fix ONNX/VAD issues
 
-Push to the branch: git push origin feature/your-feature-name
+ Add streaming STT using LiveKit Ingress
 
-Open a Pull Request 🚀
+ Optimize latency using async batch processing
 
-👤 Author
- Harsh Vaishnav
+ Add UI or CLI interface for configuration
 
-GitHub: https://github.com/HARSHHVAISHNAV
+🙌 Credits
+LiveKit – Real-time voice infrastructure
 
-LinkedIn: www.linkedin.com/in/harsh-vaishnav-a8b46b230
+Together AI – Whisper-based speech-to-text
 
-📸 Preview
-Coming Soon – Live demo or sample recording!
+Groq – Ultra-fast Mistral LLM responses
+
+ElevenLabs – Human-like text-to-speech
+
+Silero VAD – Voice Activity Detection (planned)
+
+📜 License
+This project is for educational and demo purposes. Contact the author for licensing details.
